@@ -9,14 +9,14 @@ pipeline {
             sh 'npm install'
             }
          }
-         stage('Test and Build') {
+         
             
-            stage('Create Build Artifacts') {
-               steps {
-                  sh 'npm run build'
+        stage('Create Build Artifacts') {
+            steps {
+                sh 'npm run build'
                }
-            }
-            }
+        }
+            
          
           stage('Validate CF syntax') {
                steps {
