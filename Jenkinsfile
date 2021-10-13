@@ -17,7 +17,7 @@ pipeline {
                }
             }
             }
-         }
+         
           stage('Validate CF syntax') {
                steps {
                    withAWS(region:'ap-southeast-2', credentials:'aws-credentials') {
