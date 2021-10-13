@@ -29,7 +29,7 @@ pipeline {
                steps {
                   withAWS(region:'ap-southeast-2', credentials:'aws-credentials') {
                            sh 'aws cloudformation deploy \
-                        --template-file git-practice.yml \
+                        --template-file s3.yml \
                         --stack-name git-practice-stack \
                         --parameter-overrides BucketName=tobias-git-practice'
                   }
