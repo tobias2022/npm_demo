@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Parameters:
+  BucketName:
+    Type: String
+
+Resources:
+  GitPracticeS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub ${BucketName}
+      AccessControl: PublicRead # visitors need to be able to access the site
+      WebsiteConfiguration:
+        IndexDocument: index.html # default object served when visiting S3 domain
+        ErrorDocument: index.html # just send to app, let React handle errors and routing
+
+  GitPracticeBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref GitPracticeS3Bucket
+      PolicyDocument:
+        Id: GitPracticePolicy
+        Version: 2012-10-17
+        Statement:
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: "*" # wildcard, allow all requests
+            Action: "s3:GetObject"
+            Resource: !Sub "arn:aws:s3:::${GitPracticeS3Bucket}/*" #!Join ['', ['arn:aws:s3:::', !Ref MyBucket, /*]]
