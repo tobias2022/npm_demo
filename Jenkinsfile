@@ -42,7 +42,8 @@ pipeline {
                         s3Upload(bucket: 'tobias-git-practice', workingDir:'build', includePathPattern:'**/*')
                  
                
+                     }
+                  }
                }
          }
-   }
 }
