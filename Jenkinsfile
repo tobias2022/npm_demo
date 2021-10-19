@@ -6,26 +6,30 @@ pipeline {
    stages {
          stage('Install Packages') {
             steps {
-            sh 'npm install'
+               sh 'npm install'
             }
          }
          
-            
-        stage('Create Build Artifacts') {
+         stage('Test') {
+            steps{
+               sh 'npm run test'
+            }
+         }    
+         stage('Create Build Artifacts') {
             steps {
-                sh 'npm run build'
-               }
-        }
+               sh 'npm run build'
+            }
+         }
             
          
-          stage('Validate CF syntax') {
-               steps {
-                   withAWS(region:'ap-southeast-2', credentials:'aws-credentials') {
+         stage('Validate CF syntax') {
+            steps {
+               withAWS(region:'ap-southeast-2', credentials:'aws-credentials') {
                   sh 'aws cloudformation validate-template --template-body file://s3.yml'
                    }
                }
             }
-             stage('S3 Bucket') {
+            stage('S3 Bucket') {
                steps {
                   withAWS(region:'ap-southeast-2', credentials:'aws-credentials') {
                            sh 'aws cloudformation deploy \
